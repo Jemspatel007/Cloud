@@ -1,0 +1,26 @@
+services:
+  container1:
+    image: jems007patel/con1
+    container_name: con1
+    build: ./container1
+    ports:
+      - "6000:6000"
+    volumes:
+      - .:/data
+    environment:
+      - port=6000
+      - directory=/data
+      - container2_endpoint=http://con2:2000/parser
+    depends_on:
+      - container2
+  container2:
+    image: jems007patel/con2
+    container_name: con2
+    build: ./container2
+    ports:
+      - "2000:2000"
+    volumes:
+      - .:/data
+    environment:
+      - port=2000
+      - directory=/data

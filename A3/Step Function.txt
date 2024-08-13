@@ -1,0 +1,41 @@
+{
+  "Comment": "Step function for A3",
+  "StartAt": "Choice",
+  "States": {
+    "Choice": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.action",
+          "StringEquals": "sha256",
+          "Next": "SHA256"
+        },
+        {
+          "Variable": "$.action",
+          "StringEquals": "md5",
+          "Next": "MD5"
+        },
+        {
+          "Variable": "$.action",
+          "StringEquals": "bcrypt",
+          "Next": "Bcrypt"
+        }
+      ]
+    },
+    "SHA256": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:297323627892:function:SHA",
+      "End": true
+    },
+    "MD5": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:297323627892:function:MD5",
+      "End": true
+    },
+    "Bcrypt": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:297323627892:function:Bcrypt",
+      "End": true
+    }
+  }
+}

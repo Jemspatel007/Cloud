@@ -1,0 +1,117 @@
+Index: .idea/jems.iml
+===================================================================
+diff --git a/.idea/jems.iml b/.idea/jems.iml
+deleted file mode 100644
+--- a/.idea/jems.iml	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
++++ /dev/null	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
+@@ -1,9 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$" />
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: .idea/misc.xml
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+deleted file mode 100644
+--- a/.idea/misc.xml	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
++++ /dev/null	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectRootManager">
+-    <output url="file://$PROJECT_DIR$/out" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
++++ /dev/null	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
+@@ -1,8 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+-# Editor-based HTTP Client requests
+-/httpRequests/
+-# Datasource local storage ignored files
+-/dataSources/
+-/dataSources.local.xml
+Index: .idea/modules.xml
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+deleted file mode 100644
+--- a/.idea/modules.xml	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
++++ /dev/null	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/jems.iml" filepath="$PROJECT_DIR$/.idea/jems.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+deleted file mode 100644
+--- a/.idea/vcs.xml	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
++++ /dev/null	(revision 9db4a9c924c6468caf7af19e107664a90db8ea72)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: A1/docker-compose.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>services:\n  container1:\n    image: jems007patel/con1\n    ports:\n      - \"6000:6000\"\n    volumes:\n      - .:/data\n    environment:\n      - port=6000\n      - directory=/data\n      - container2_endpoint=http://container_2:2000/parser\n    depends_on:\n      - container2\n  container2:\n    image: jems007patel/con2\n    container_name: container_2\n    ports:\n      - \"2000:2000\"\n    volumes:\n      - .:/data\n    environment:\n      - port=2000\n      - directory=/data\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/A1/docker-compose.yml b/A1/docker-compose.yml
+--- a/A1/docker-compose.yml	(revision af139d7c5b1ccde2051cd14e6129d9ee393defce)
++++ b/A1/docker-compose.yml	(date 1718990103282)
+@@ -1,6 +1,8 @@
+ services:
+   container1:
+     image: jems007patel/con1
++    container_name: con1
++    build: ./container1
+     ports:
+       - "6000:6000"
+     volumes:
+@@ -8,16 +10,17 @@
+     environment:
+       - port=6000
+       - directory=/data
+-      - container2_endpoint=http://container_2:2000/parser
++      - container2_endpoint=http://con2:2000/parser
+     depends_on:
+       - container2
+   container2:
+     image: jems007patel/con2
+-    container_name: container_2
++    container_name: con2
++    build: ./container2
+     ports:
+       - "2000:2000"
+     volumes:
+       - .:/data
+     environment:
+       - port=2000
+-      - directory=/data
++      - directory=/data
+\ No newline at end of file
